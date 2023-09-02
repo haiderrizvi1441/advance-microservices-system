@@ -14,13 +14,24 @@ spring:
     hibernate: 
       ddl-auto: update
 
+  # Config Server 
+  config:
+    import: configserver:http://localhost:9296
 
-# Eureka Client Configuration - to conenct to Eureka Service Application
-eureka:
-  instance:
-    prefer-ip-address: true
-  client: 
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: ${EUREKA_SERVER_ADDRESS:http://localhost:8761/eureka}
+# Zipkin and Slueth Configuration
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+# # Eureka Client Configuration - to conenct to Eureka Service Application
+# eureka:
+#   instance:
+#     prefer-ip-address: true
+#   client: 
+#     fetch-registry: true
+#     register-with-eureka: true
+#     service-url:
+#       defaultZone: ${EUREKA_SERVER_ADDRESS:http://localhost:8761/eureka}
+
+
+# The Above configuration is moved to github through Config Server

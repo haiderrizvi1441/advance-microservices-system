@@ -49,5 +49,26 @@ public class ProductServiceImpl implements ProductService {
 
         
     }
+
+    @Override
+    public void reduceQuantity(long productId, long quantity) {
+        log.info("Reduce Quantity {} for Id: {}", quantity, productId);
+        
+        // Get the Product
+        Product product = productRepository.findById(productId).orElseThrow(() -> new ProductServiceCustomException("Product with given Id not foubd", "PRODUCT_NOT_FOUND"));
+
+        // Reduce the quantity
+        if(product.getQuantity() < quantity){
+            throw new ProductServiceCustomException(
+                "Not Sufficient Quantity Available", "INSUFFICIENT_QUANTITY"
+            );
+        }
+        product.setQuantity(product.getQuantity()-quantity);
+
+        // Save the product with new Value 
+        productRepository.save(product);
+
+        log.info("Product quantity updated sucessfully");
+    }
     
 }

@@ -7,5 +7,7 @@ eureka:
     client:
     register-with-eureka: false #Not to be connected , its a server not client 
     fetch-registry: false
-    
 
+spring:
+    application:
+        name: SERVICE-REGISTRY
