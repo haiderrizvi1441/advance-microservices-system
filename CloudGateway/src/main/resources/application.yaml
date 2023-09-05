@@ -1,0 +1,41 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: API-GATEWAY
+  # Config Server
+  config:
+    import: configserver:http://localhost:9296
+
+  # Cloud Config (Gateway specific)
+  cloud:
+    gateway:
+      routes:
+        - id: ORDER-SERVICE
+          uri: http://localhost:8082
+          predicates:
+            - Path=/order/**
+          filters: # Config for Circuit Breaker
+            - name: CircuitBreaker 
+              args:
+                name: ORDER-SERVICE
+                fallbackuri: forward:/orderServiceFallBack
+        - id: PRODUCT-SERVICE
+          uri: http://localhost:8080
+          predicates:
+            - Path=/product/**
+          filters: # Config for Circuit Breaker
+            - name: CircuitBreaker 
+              args:
+                name: PRODUCT-SERVICE
+                fallbackuri: forward:/productServiceFallBack
+        - id: PAYMENT-SERVICE
+          uri: http://localhost:8081
+          predicates:
+            - Path=/payment/**
+          filters: # Config for Circuit Breaker
+            - name: CircuitBreaker 
+              args:
+                name: PAYMENT-SERVICE
+                fallbackuri: forward:/paymentServiceFallBack

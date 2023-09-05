@@ -8,5 +8,8 @@ import com.hr.PaymentService.entity.TransactionDetails;
 @Repository
 public interface TransactionDetailsRepository extends JpaRepository<TransactionDetails, Long> {
     
+    // CUSTOM METHODS
+    // Get Order Details by orderId
+    TransactionDetails findByOrderId(long orderId);
 
 }
