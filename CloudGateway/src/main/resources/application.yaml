@@ -39,3 +39,13 @@ spring:
               args:
                 name: PAYMENT-SERVICE
                 fallbackuri: forward:/paymentServiceFallBack
+
+# OKTA Coniguration 
+
+okta:
+  oauth2:
+    issuer: https://dev-90693819.okta.com/oauth2/default
+    audience: api://default
+    client-id: 0oab4phbjzZKmz9rl5d7
+    client-secret: CYVlL38YWngew14V94x5XBOmMKtm61CBhby9P-qPGukFGmGFiWZKOEttXNTULfP8
+    scopes: openid, profile, email, offline_access

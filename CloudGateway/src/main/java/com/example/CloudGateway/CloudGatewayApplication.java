@@ -5,9 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;
 import org.springframework.cloud.client.circuitbreaker.Customizer;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
+import reactor.core.publisher.Mono;
 
 @SpringBootApplication
 public class CloudGatewayApplication {
@@ -16,7 +18,13 @@ public class CloudGatewayApplication {
 		SpringApplication.run(CloudGatewayApplication.class, args);
 		System.out.println("Cloud API Gateway is working");
 	}
+	// Rate Limiter Config
+	@Bean
+	KeyResolver userKeyResolver(){
+		return exchange -> Mono.just("userKey");
+	}
 
+	// Cicurit Breaker Config
 	@Bean
 	public Customizer<Resilience4JCircuitBreakerFactory> defaultCustomizer(){
 
